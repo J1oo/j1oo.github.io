@@ -3,26 +3,5 @@
         <title>Categories - 分类 - J1oo</title>
         <link>https://J1oo.github.io/categories/</link>
         <description>Categories - 分类 - J1oo</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 27 Jul 2024 00:06:34 &#43;0800</lastBuildDate><atom:link href="https://J1oo.github.io/categories/" rel="self" type="application/rss+xml" /><item>
-    <title>test</title>
-    <link>https://J1oo.github.io/categories/test/</link>
-    <pubDate>Sat, 27 Jul 2024 00:06:34 &#43;0800</pubDate><author>
-        <name>J1oo</name>
-    </author><guid>https://J1oo.github.io/categories/test/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>struct2</title>
-    <link>https://J1oo.github.io/categories/struct2/</link>
-    <pubDate>Fri, 05 Jan 2024 00:06:34 &#43;0800</pubDate><author>
-        <name>J1oo</name>
-    </author><guid>https://J1oo.github.io/categories/struct2/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>web</title>
-    <link>https://J1oo.github.io/categories/web/</link>
-    <pubDate>Thu, 04 Jan 2024 20:14:12 &#43;0800</pubDate><author>
-        <name>J1oo</name>
-    </author><guid>https://J1oo.github.io/categories/web/</guid>
-    <description><![CDATA[]]></description>
-</item></channel>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://J1oo.github.io/categories/" rel="self" type="application/rss+xml" /></channel>
 </rss>
