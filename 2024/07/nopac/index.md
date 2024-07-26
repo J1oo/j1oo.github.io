@@ -19,4 +19,4 @@ Pasted image 20240727051658.png
 
 ![Pasted image 20240727052213.png](../../../img/Pasted image 20240727052213.png)
 
-![Pasted image 20240727052218.png](../../../img/Pasted image 20240727052218.png)
+![Pasted-image-20240727052218.png](../../../img/Pasted image 20240727052218.png)
