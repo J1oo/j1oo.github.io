@@ -3,9 +3,16 @@
         <title>J1oo</title>
         <link>https://J1oo.github.io/</link>
         <description>Hugo DoIt 主题官方文档</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 05 Jan 2024 00:06:34 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 27 Jul 2024 00:06:34 &#43;0800</lastBuildDate>
             <atom:link href="https://J1oo.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>test1</title>
+    <link>https://J1oo.github.io/2024/07/test1/</link>
+    <pubDate>Sat, 27 Jul 2024 00:06:34 &#43;0800</pubDate><author>
+        <name>J1oo</name>
+    </author><guid>https://J1oo.github.io/2024/07/test1/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>S2 066</title>
     <link>https://J1oo.github.io/2024/01/s2-066/</link>
     <pubDate>Fri, 05 Jan 2024 00:06:34 &#43;0800</pubDate><author>
@@ -40,5 +47,12 @@
         <name>J1oo</name>
     </author><guid>https://J1oo.github.io/2024/01/sql/</guid>
     <description><![CDATA[]]></description>
+</item><item>
+    <title></title>
+    <link>https://J1oo.github.io/1/01/test/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate><author>
+        <name>J1oo</name>
+    </author><guid>https://J1oo.github.io/1/01/test/</guid>
+    <description><![CDATA[123123]]></description>
 </item></channel>
 </rss>
