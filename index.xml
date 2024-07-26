@@ -3,7 +3,14 @@
         <title>J1oo</title>
         <link>https://J1oo.github.io/</link>
         <description>Hugo DoIt 主题官方文档</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 27 Jul 2024 03:51:32 &#43;0800</lastBuildDate>
             <atom:link href="https://J1oo.github.io/index.xml" rel="self" type="application/rss+xml" />
-        </channel>
+        <item>
+    <title>Nopac</title>
+    <link>https://J1oo.github.io/2024/07/nopac/</link>
+    <pubDate>Sat, 27 Jul 2024 03:51:32 &#43;0800</pubDate><author>
+        <name>J1oo</name>
+    </author><guid>https://J1oo.github.io/2024/07/nopac/</guid>
+    <description><![CDATA[![[Pasted image 20240727035646.png]]]]></description>
+</item></channel>
 </rss>
