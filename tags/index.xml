@@ -1,0 +1,28 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags - 标签 - J1oo</title>
+        <link>https://J1oo.github.io/tags/</link>
+        <description>Tags - 标签 - J1oo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 05 Jan 2024 00:06:34 &#43;0800</lastBuildDate><atom:link href="https://J1oo.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>rce</title>
+    <link>https://J1oo.github.io/tags/rce/</link>
+    <pubDate>Fri, 05 Jan 2024 00:06:34 &#43;0800</pubDate><author>
+        <name>J1oo</name>
+    </author><guid>https://J1oo.github.io/tags/rce/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>回显</title>
+    <link>https://J1oo.github.io/tags/%E5%9B%9E%E6%98%BE/</link>
+    <pubDate>Thu, 04 Jan 2024 20:14:12 &#43;0800</pubDate><author>
+        <name>J1oo</name>
+    </author><guid>https://J1oo.github.io/tags/%E5%9B%9E%E6%98%BE/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>web</title>
+    <link>https://J1oo.github.io/tags/web/</link>
+    <pubDate>Wed, 03 Jan 2024 13:08:46 &#43;0800</pubDate><author>
+        <name>J1oo</name>
+    </author><guid>https://J1oo.github.io/tags/web/</guid>
+    <description><![CDATA[]]></description>
+</item></channel>
+</rss>
