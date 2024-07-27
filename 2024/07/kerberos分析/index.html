@@ -295,15 +295,7 @@ pvno：5 代表 kerberos 协议的版本号
     </a></p>
 <p>可见带上了TIMESTAMP，其中的cipher：一个用用户密码对时间戳进行加密的值</p>
 <h2 id="as-rep2" class="headerLink">
-    <a href="#as-rep2" class="header-mark"></a>4 AS-REP(2)</h2><p><a class="lightgallery" href="../../../img/image-20240728042909602.png" title="image-20240728042909602" data-thumbnail="../../../img/image-20240728042909602.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/image-20240728042909602.png"
-            srcset="../../../img/image-20240728042909602.png, ../../../img/image-20240728042909602.png 1.5x, ../../../img/image-20240728042909602.png 2x"
-            sizes="auto"
-            alt="../../../img/image-20240728042909602.png">
-    </a></p>
+    <a href="#as-rep2" class="header-mark"></a>4 AS-REP(2)</h2><img src="../../../img/image-20240728042909602.png" alt="image-20240728042909602" style="zoom:150%;" />
 <p>kdc会对AS-REQ发送的<strong>TIMESTAMP</strong>进行验证，如果验证通过则会返回两个enc-part</p>
 <p>第一个包括了krbtgt密钥生成的TGT用于后续申请TGT</p>
 <p>第二个包括了使用用户hash加密的（<strong>Logon Session Key</strong>）用于客户端和TGS之间的通信。as-reproasting爆破的地方</p>
@@ -311,38 +303,14 @@ pvno：5 代表 kerberos 协议的版本号
 <p>TGT本身是无用的，是krbtgt加密的不透明blob数据，普通用户无法解码，此时第二个数据发挥了作用，他是用户hash进行加密的，包含一组元数据，启动时间，结束时间，票据的更新期限，最重要的是包含一个Session Key会话密钥，TGT blob中也有</p>
 <p>那么用户如何使用TGT？用户能使用会话密钥加密的认证器，证明一开始就知道认证交换过程的会话密钥，所以TGT中也有会话密钥，因为TGT要被真正使用的前提是得知会话密钥。TGT续订和S4U请求都需要这个会话密钥</p>
 <h2 id="tgs-req" class="headerLink">
-    <a href="#tgs-req" class="header-mark"></a>5 TGS-REQ</h2><p><a class="lightgallery" href="../../../img/image-20240728042934551.png" title="image-20240728042934551" data-thumbnail="../../../img/image-20240728042934551.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/image-20240728042934551.png"
-            srcset="../../../img/image-20240728042934551.png, ../../../img/image-20240728042934551.png 1.5x, ../../../img/image-20240728042934551.png 2x"
-            sizes="auto"
-            alt="../../../img/image-20240728042934551.png">
-    </a></p>
+    <a href="#tgs-req" class="header-mark"></a>5 TGS-REQ</h2><img src="../../../img/image-20240728042934551.png" alt="image-20240728042934551" style="zoom:150%;" />
 <p>ticket中第一个enc-part的票据部分与AS-REP的是一样的</p>
 <p>authenticator是时间戳和Logon session key加密的</p>
 <p><strong>req-body</strong>如下</p>
-<p><a class="lightgallery" href="../../../img/image-20240728044000333.png" title="image-20240728044000333" data-thumbnail="../../../img/image-20240728044000333.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/image-20240728044000333.png"
-            srcset="../../../img/image-20240728044000333.png, ../../../img/image-20240728044000333.png 1.5x, ../../../img/image-20240728044000333.png 2x"
-            sizes="auto"
-            alt="../../../img/image-20240728044000333.png">
-    </a></p>
+<img src="../../../img/image-20240728044000333.png" alt="image-20240728044000333" style="zoom:150%;" />
 <p>请求16server1的host服务</p>
 <h2 id="tgs-rep" class="headerLink">
-    <a href="#tgs-rep" class="header-mark"></a>6 TGS-REP</h2><p><a class="lightgallery" href="../../../img/image-20240728044452346.png" title="image-20240728044452346" data-thumbnail="../../../img/image-20240728044452346.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/image-20240728044452346.png"
-            srcset="../../../img/image-20240728044452346.png, ../../../img/image-20240728044452346.png 1.5x, ../../../img/image-20240728044452346.png 2x"
-            sizes="auto"
-            alt="../../../img/image-20240728044452346.png">
-    </a></p>
+    <a href="#tgs-rep" class="header-mark"></a>6 TGS-REP</h2><img src="../../../img/image-20240728044452346.png" alt="image-20240728044452346" style="zoom:150%;" />
 <p>第一个enc-part包含了TGS/ST，用ST去访问特定的服务（这里的host）</p>
 <p>第二个包含了<strong>Logon Session Key</strong>加密的<strong>Service Session Key</strong>，用于和服务之间的通信</p>
 </div>
