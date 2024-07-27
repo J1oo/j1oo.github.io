@@ -2,6 +2,7 @@
 .main .container {
     display: flex; /* 使用 flexbox 布局 */
     max-width: 100%; /* 设置最大宽度 */
+    margin: 0 auto; /* 居中对齐 */
     flex-wrap: wrap; /* 确保内容在较小屏幕上正确换行 */
 }
 
@@ -20,11 +21,12 @@
 
 /* 调整文章中图片的显示尺寸 */
 .main .content img {
-    width: 100%; /* 让图片根据行宽自动调整 */
+    width: auto; /* 根据内容调整宽度 */
+    max-width: 100%; /* 确保图片不会超过容器宽度 */
     height: auto; /* 保持图片的原始比例 */
     display: block; /* 去除图片的默认内边距 */
     object-fit: contain; /* 确保图片在调整大小时保持良好的显示效果 */
-    margin: 10px 0; /* 增加上下边距 */
+    margin: 10px auto; /* 居中对齐并增加上下边距 */
 }
 
 /* 调整图片的显示比例（宽高比） */
