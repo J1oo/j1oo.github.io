@@ -22,9 +22,6 @@
     max-width: 100%; /* 确保图片不会超过容器宽度 */
     height: auto; /* 保持图片的原始比例 */
     display: block; /* 去除图片的默认内边距 */
-    margin: 10px 0; /* 增加上下边距 */
-    border: 2px solid #ddd; /* 添加边框，使图片更加突出 */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
     object-fit: contain; /* 确保图片在调整大小时保持良好的显示效果 */
 }
 
@@ -33,27 +30,4 @@
     width: 100%; /* 调整宽度 */
     height: auto; /* 调整高度 */
     object-fit: contain; /* 确保图片填满容器 */
-}
-
-/* 调整文章中图片在小屏幕上的显示尺寸 */
-@media (max-width: 768px) {
-    .main .content img {
-        width: 100%; /* 在小屏幕上恢复到默认宽度 */
-        max-width: 100%; /* 确保图片不会超过容器宽度 */
-    }
-
-    .main .container {
-        flex-direction: column; /* 在小屏幕上堆叠布局 */
-    }
-
-    .main .sidebar {
-        width: 100%; /* 在小屏幕上侧边栏占满宽度 */
-        margin-top: 20px; /* 增加顶部间距 */
-    }
-}
-
-/* 调整 Markdown 文章的行间距 */
-.content p {
-    line-height: 1.8; /* 你可以根据需要调整这个值 */
-    margin-bottom: 1.5em; /* 增加段落之间的间距 */
 }
