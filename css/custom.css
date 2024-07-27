@@ -6,9 +6,9 @@
 
 /* 调整文章中图片的显示尺寸 */
 .main .container img {
-    width: 150%; /* 让图片根据行宽自动调整 */
+    width: 100%; /* 让图片根据行宽自动调整 */
     max-width: 1200px; /* 设置最大宽度，防止图片过大 */
-    height: 150%; /* 保持图片的原始比例 */
+    height: auto; /* 保持图片的原始比例 */
     display: block; /* 去除图片的默认内边距 */
     margin: 10px 0; /* 增加上下边距 */
     border: 2px solid #ddd; /* 添加边框，使图片更加突出 */
@@ -19,7 +19,7 @@
 /* 调整图片的显示比例（宽高比） */
 .main .container img {
     width: 150%; /* 调整宽度 */
-    height: 150%; /* 调整高度 */
+    height: auto; /* 调整高度 */
     object-fit: contain; /* 确保图片填满容器 */
 }
 
@@ -32,7 +32,8 @@
 }
 
 /* 调整 Markdown 文章的行间距 */
-.content p {
-    line-height: 1.8; /* 你可以根据需要调整这个值 */
-    margin-bottom: 1.5em; /* 增加段落之间的间距 */
+.content {
+    width: 150%; /* 使内容宽度尽可能大 */
+    max-width: 1200px; /* 设置内容最大宽度 */
+    margin: 0 auto; /* 居中对齐 */
 }
