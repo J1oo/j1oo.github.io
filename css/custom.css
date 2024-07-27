@@ -27,13 +27,7 @@
     display: block; /* 去除图片的默认内边距 */
     object-fit: contain; /* 确保图片在调整大小时保持良好的显示效果 */
     margin: 10px auto; /* 居中对齐并增加上下边距 */
-}
-
-/* 调整图片的显示比例（宽高比） */
-.main .content img {
-    width: 100%; /* 调整宽度 */
-    height: auto; /* 调整高度 */
-    object-fit: contain; /* 确保图片填满容器 */
+    zoom: 150%; /* 设置缩放比例 */
 }
 
 /* 调整文章中图片在小屏幕上的显示尺寸 */

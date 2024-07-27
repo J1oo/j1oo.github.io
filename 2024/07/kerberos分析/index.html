@@ -209,27 +209,11 @@ pvno：5 代表 kerberos 协议的版本号
 <p>padata-value: 3005a0030101ff，一个16进制值，后面的ff代表true，跟include-pac对应</p>
 <p>然后看req-body</p>
 <p>用于指示客户端对KDC提出的要求和期望，KDC-OPTIONS是一个位掩码，每个位代表一个选项，可以是开启（True）或关闭（False）</p>
-<p><a class="lightgallery" href="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png" title="tmp1722109319199_Kerberos分析_image_2" data-thumbnail="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png"
-            srcset="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png, ../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png 1.5x, ../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png 2x"
-            sizes="auto"
-            alt="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png">
-    </a>cname顾名思义client name，包括请求者的用户信息，域</p>
+<p><img src="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png" alt="tmp1722109319199_Kerberos分析_image_2" style="zoom:150%;" />cname顾名思义client name，包括请求者的用户信息，域</p>
 <p>sname包含的是服务端的身份krbtgt和域，till是到期时间，nonce是随机生成数</p>
 <p>etype为加密类型，列出多个加密类型，确保客户端和KDC之间至少有一个支持的加密算法</p>
 <h2 id="as-rep" class="headerLink">
-    <a href="#as-rep" class="header-mark"></a>2 AS-REP</h2><p><a class="lightgallery" href="../../../img/image-20240728034646118.png" title="image-20240728034646118" data-thumbnail="../../../img/image-20240728034646118.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/image-20240728034646118.png"
-            srcset="../../../img/image-20240728034646118.png, ../../../img/image-20240728034646118.png 1.5x, ../../../img/image-20240728034646118.png 2x"
-            sizes="auto"
-            alt="../../../img/image-20240728034646118.png">
-    </a></p>
+    <a href="#as-rep" class="header-mark"></a>2 AS-REP</h2><img src="../../../img/image-20240728034646118.png" alt="image-20240728034646118" style="zoom:150%;" />
 <p>看到一个krb-err消息，表示需要<code>eRR-PREAUTH-REQUIRED</code> 表示需要预身份验证（错误代码25）</p>
 <p>e-data是错误消息的附加数据，包含多个预认证数据项（PA-DATA）</p>
 <p>padata-type：预认证数据类型，这里是 <code>pA-ETYPE-INFO2</code>（类型值19）</p>
@@ -284,15 +268,7 @@ pvno：5 代表 kerberos 协议的版本号
 </ul>
 <p>所以接下来会进行第二次的AS-REQ</p>
 <h2 id="as-req2" class="headerLink">
-    <a href="#as-req2" class="header-mark"></a>3 AS-REQ(2)</h2><p><a class="lightgallery" href="../../../img/image-20240728035649648.png" title="image-20240728035649648" data-thumbnail="../../../img/image-20240728035649648.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/image-20240728035649648.png"
-            srcset="../../../img/image-20240728035649648.png, ../../../img/image-20240728035649648.png 1.5x, ../../../img/image-20240728035649648.png 2x"
-            sizes="auto"
-            alt="../../../img/image-20240728035649648.png">
-    </a></p>
+    <a href="#as-req2" class="header-mark"></a>3 AS-REQ(2)</h2><img src="../../../img/image-20240728035649648.png" alt="image-20240728035649648" style="zoom:150%;" />
 <p>可见带上了TIMESTAMP，其中的cipher：一个用用户密码对时间戳进行加密的值</p>
 <h2 id="as-rep2" class="headerLink">
     <a href="#as-rep2" class="header-mark"></a>4 AS-REP(2)</h2><img src="../../../img/image-20240728042909602.png" alt="image-20240728042909602" style="zoom:150%;" />

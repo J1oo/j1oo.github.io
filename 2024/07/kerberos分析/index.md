@@ -38,7 +38,7 @@ padata-value: 3005a0030101ff，一个16进制值，后面的ff代表true，跟in
 
 用于指示客户端对KDC提出的要求和期望，KDC-OPTIONS是一个位掩码，每个位代表一个选项，可以是开启（True）或关闭（False）
 
-![tmp1722109319199_Kerberos分析_image_2](../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png)cname顾名思义client name，包括请求者的用户信息，域
+<img src="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png" alt="tmp1722109319199_Kerberos分析_image_2" style="zoom:150%;" />cname顾名思义client name，包括请求者的用户信息，域
 
 sname包含的是服务端的身份krbtgt和域，till是到期时间，nonce是随机生成数
 
@@ -46,7 +46,7 @@ etype为加密类型，列出多个加密类型，确保客户端和KDC之间至
 
 ## AS-REP
 
-![image-20240728034646118](../../../img/image-20240728034646118.png)
+<img src="../../../img/image-20240728034646118.png" alt="image-20240728034646118" style="zoom:150%;" />
 
 看到一个krb-err消息，表示需要`eRR-PREAUTH-REQUIRED` 表示需要预身份验证（错误代码25）
 
@@ -83,7 +83,7 @@ patada-type：包含加密类型和盐值
 
 ## AS-REQ(2)
 
-![image-20240728035649648](../../../img/image-20240728035649648.png)
+<img src="../../../img/image-20240728035649648.png" alt="image-20240728035649648" style="zoom:150%;" />
 
 可见带上了TIMESTAMP，其中的cipher：一个用用户密码对时间戳进行加密的值
 
