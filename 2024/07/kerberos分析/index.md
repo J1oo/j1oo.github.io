@@ -1,8 +1,6 @@
 # Kerberos分析
 
 
-# kerberos 分析
-
 kerberos 的主要步骤如下，重点分析前四步
 1. AS-REQ
 2. AS-REP
