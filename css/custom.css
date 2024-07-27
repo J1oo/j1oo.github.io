@@ -5,7 +5,7 @@
 
 /* 调整文章中图片的显示尺寸 */
 .main .container img {
-    width: 200%; /* 让图片根据行宽自动调整 */
+    width: 150%; /* 让图片根据行宽自动调整 */
     height: 150%; /* 保持图片的原始比例 */
     display: block; /* 去除图片的默认内边距 */
     border: 2px solid #ddd; /* 添加边框，使图片更加突出 */
@@ -14,8 +14,8 @@
 
 /* 调整图片的显示比例（宽高比） */
 .main .container img {
-    width: 200%; /* 调整宽度 */
-    height: 200%; /* 调整高度 */
+    width: 150%; /* 调整宽度 */
+    height: 150%; /* 调整高度 */
     object-fit: cover; /* 确保图片填满容器 */
 }
 
