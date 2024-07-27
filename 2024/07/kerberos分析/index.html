@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Kerberos - J1oo</title><meta name="Description" content="Hugo DoIt 主题官方文档"><meta property="og:title" content="Kerberos" />
+<meta property="og:description" content="kerberos 分析kerberos 的主要步骤如下，重点分析前四步 AS-REQ AS-REP TGS-REQ TGS-REP AP-REQ AP-REP 1 AS-REQ在域控上抓包，查看机器登陆域用户时产生的流量 发现AS-REQ会" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/" /><meta property="og:image" content="https://J1oo.github.io/images/avatar.webp" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-07-28T04:54:51+08:00" />
+<meta property="article:modified_time" content="2024-07-28T04:54:51+08:00" /><meta property="og:site_name" content="Hugo DoIt Theme Documentation" />
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://J1oo.github.io/images/avatar.webp" /><meta name="twitter:title" content="Kerberos"/>
+<meta name="twitter:description" content="kerberos 分析kerberos 的主要步骤如下，重点分析前四步 AS-REQ AS-REP TGS-REQ TGS-REP AP-REQ AP-REP 1 AS-REQ在域控上抓包，查看机器登陆域用户时产生的流量 发现AS-REQ会"/>
+<meta name="application-name" content="J1oo的博客">
+<meta name="apple-mobile-web-app-title" content="J1oo的博客">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/" /><link rel="next" href="https://J1oo.github.io/2024/07/kerberos/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><meta name="google-site-verification" content="MQ8DNu27ayX6B_4ObiEDK09vGr1fdy7kOAnbd09hJk4" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kerberos",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/J1oo.github.io\/2024\/07\/kerberos%E5%88%86%E6%9E%90\/"
+        },"image": ["https:\/\/J1oo.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "","wordcount":  1492 ,
+        "url": "https:\/\/J1oo.github.io\/2024\/07\/kerberos%E5%88%86%E6%9E%90\/","datePublished": "2024-07-28T04:54:51+08:00","dateModified": "2024-07-28T04:54:51+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/J1oo.github.io\/images\/avatar.webp",
+                    "width":  640 ,
+                    "height":  640 
+                }},"author": {
+                "@type": "Person",
+                "name": "J1oo"
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/custom.css">
+</head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark');}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="J1oo"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/series/"> 系列 </a><span class="menu-item delimiter"></span><a href="#" onclick="return false;" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/2024/07/kerberos%E5%88%86%E6%9E%90/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="J1oo"><span class="header-title-pre"><i class='far fa-edit fa-fw'></i></span><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/series/" title="">系列</a><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a><a href="#" onclick="return false;" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/2024/07/kerberos%E5%88%86%E6%9E%90/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#as-req">AS-REQ</a></li>
+    <li><a href="#as-rep">AS-REP</a></li>
+    <li><a href="#as-req2">AS-REQ(2)</a></li>
+    <li><a href="#as-rep2">AS-REP(2)</a></li>
+    <li><a href="#tgs-req">TGS-REQ</a></li>
+    <li><a href="#tgs-rep">TGS-REP</a></li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kerberos</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">J1oo</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/"><i class="far fa-folder fa-fw"></i>Categories</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/ad/"><i class="far fa-list-alt fa-fw"></i>AD</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1492 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details series-nav open">
+                                <div class="details-summary series-title">
+                                    <span>系列 - AD</span>
+                                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                                </div>
+                                <div class="details-content series-content">
+                                    <nav>
+                                        <ul><li><span class="active">Kerberos</span></li></ul>
+                                    </nav>
+                                </div>
+                            </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#as-req">AS-REQ</a></li>
+    <li><a href="#as-rep">AS-REP</a></li>
+    <li><a href="#as-req2">AS-REQ(2)</a></li>
+    <li><a href="#as-rep2">AS-REP(2)</a></li>
+    <li><a href="#tgs-req">TGS-REQ</a></li>
+    <li><a href="#tgs-rep">TGS-REP</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="kerberos-分析" class="headerLink">
+    <a href="#kerberos-%e5%88%86%e6%9e%90" class="header-mark"></a>kerberos 分析</h1><p>kerberos 的主要步骤如下，重点分析前四步</p>
+<ol>
+<li>AS-REQ</li>
+<li>AS-REP</li>
+<li>TGS-REQ</li>
+<li>TGS-REP</li>
+<li>AP-REQ</li>
+<li>AP-REP</li>
+</ol>
+<h2 id="as-req" class="headerLink">
+    <a href="#as-req" class="header-mark"></a>1 AS-REQ</h2><p>在域控上抓包，查看机器登陆域用户时产生的流量</p>
+<p><a class="lightgallery" href="../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png" title="Kerberos分析_image_1" data-thumbnail="../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png">
+        <img
+            
+            loading="lazy"
+            src="../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png"
+            srcset="../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png, ../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png 1.5x, ../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png 2x"
+            sizes="auto"
+            alt="../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png">
+    </a></p>
+<p>发现AS-REQ会进行两次，原因是开启了域身份验证，第一次的AS-REQ相比第二次会少一部分</p>
+<img src="../../../img/image-20240728012905687.png" alt="image-20240728012905687" style="zoom: 200%;" />
+先看这一部分
+<img src="../../../img/image-20240728013101500.png" alt="image-20240728013101500" style="zoom:200%;" />
+pvno：5 代表 kerberos 协议的版本号
+<p>msg-type 是消息类型</p>
+<p>padata：1 item 代表有一个数据项</p>
+<p>padata-type: pA-PAC-REQUEST (128)，<strong>这是一个 PAC 的请求</strong>，PAC 用于携带用户的特权信息比如 <strong>用户组、特权</strong></p>
+<p>padata-value: 3005a0030101ff，一个16进制值，后面的ff代表true，跟include-pac对应</p>
+<p>然后看req-body</p>
+<p>用于指示客户端对KDC提出的要求和期望，KDC-OPTIONS是一个位掩码，每个位代表一个选项，可以是开启（True）或关闭（False）</p>
+<p><a class="lightgallery" href="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png" title="tmp1722109319199_Kerberos分析_image_2" data-thumbnail="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png">
+        <img
+            
+            loading="lazy"
+            src="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png"
+            srcset="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png, ../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png 1.5x, ../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png 2x"
+            sizes="auto"
+            alt="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png">
+    </a>cname顾名思义client name，包括请求者的用户信息，域</p>
+<p>sname包含的是服务端的身份krbtgt和域，till是到期时间，nonce是随机生成数</p>
+<p>etype为加密类型，列出多个加密类型，确保客户端和KDC之间至少有一个支持的加密算法</p>
+<h2 id="as-rep" class="headerLink">
+    <a href="#as-rep" class="header-mark"></a>2 AS-REP</h2><p><a class="lightgallery" href="../../../img/image-20240728034646118.png" title="image-20240728034646118" data-thumbnail="../../../img/image-20240728034646118.png">
+        <img
+            
+            loading="lazy"
+            src="../../../img/image-20240728034646118.png"
+            srcset="../../../img/image-20240728034646118.png, ../../../img/image-20240728034646118.png 1.5x, ../../../img/image-20240728034646118.png 2x"
+            sizes="auto"
+            alt="../../../img/image-20240728034646118.png">
+    </a></p>
+<p>看到一个krb-err消息，表示需要<code>eRR-PREAUTH-REQUIRED</code> 表示需要预身份验证（错误代码25）</p>
+<p>e-data是错误消息的附加数据，包含多个预认证数据项（PA-DATA）</p>
+<p>padata-type：预认证数据类型，这里是 <code>pA-ETYPE-INFO2</code>（类型值19）</p>
+<p>patada-type：包含加密类型和盐值</p>
+<p><a class="lightgallery" href="../../../img/image-20240728035204246.png" title="image-20240728035204246" data-thumbnail="../../../img/image-20240728035204246.png">
+        <img
+            
+            loading="lazy"
+            src="../../../img/image-20240728035204246.png"
+            srcset="../../../img/image-20240728035204246.png, ../../../img/image-20240728035204246.png 1.5x, ../../../img/image-20240728035204246.png 2x"
+            sizes="auto"
+            alt="../../../img/image-20240728035204246.png">
+    </a></p>
+<p><strong>PA-DATA pA-ENC-TIMESTAMP</strong></p>
+<ul>
+<li>padata-type: pA-ENC-TIMESTAMP (2)
+<ul>
+<li>预认证数据类型，这里是 <code>pA-ENC-TIMESTAMP</code>（类型值2）。</li>
+</ul>
+</li>
+<li>padata-value:
+<ul>
+<li>显示为 <code>&lt;MISSING&gt;</code>，表示预期的时间戳数据缺失。通常，这部分会包含客户端加密的时间戳，用于验证客户端的身份。</li>
+</ul>
+</li>
+</ul>
+<p><strong>PA-DATA pA-PK-AS-REQ</strong></p>
+<ul>
+<li>padata-type: pA-PK-AS-REQ (16)
+<ul>
+<li>预认证数据类型，这里是 <code>pA-PK-AS-REQ</code>（类型值16），通常用于公钥加密的预认证。</li>
+</ul>
+</li>
+<li>padata-value:
+<ul>
+<li>显示为 <code>&lt;MISSING&gt;</code>，表示预期的公钥认证数据缺失。</li>
+</ul>
+</li>
+</ul>
+<p><strong>PA-DATA pA-PK-AS-REP-19</strong></p>
+<ul>
+<li>padata-type: pA-PK-AS-REP-19 (15)
+<ul>
+<li>预认证数据类型，这里是 <code>pA-PK-AS-REP-19</code>（类型值15），通常用于公钥加密的预认证响应。</li>
+</ul>
+</li>
+<li>padata-value:
+<ul>
+<li>显示为 <code>&lt;MISSING&gt;</code>，表示预期的公钥认证响应数据缺失。</li>
+</ul>
+</li>
+</ul>
+<p>所以接下来会进行第二次的AS-REQ</p>
+<h2 id="as-req2" class="headerLink">
+    <a href="#as-req2" class="header-mark"></a>3 AS-REQ(2)</h2><p><a class="lightgallery" href="../../../img/image-20240728035649648.png" title="image-20240728035649648" data-thumbnail="../../../img/image-20240728035649648.png">
+        <img
+            
+            loading="lazy"
+            src="../../../img/image-20240728035649648.png"
+            srcset="../../../img/image-20240728035649648.png, ../../../img/image-20240728035649648.png 1.5x, ../../../img/image-20240728035649648.png 2x"
+            sizes="auto"
+            alt="../../../img/image-20240728035649648.png">
+    </a></p>
+<p>可见带上了TIMESTAMP，其中的cipher：一个用用户密码对时间戳进行加密的值</p>
+<h2 id="as-rep2" class="headerLink">
+    <a href="#as-rep2" class="header-mark"></a>4 AS-REP(2)</h2><p><a class="lightgallery" href="../../../img/image-20240728042909602.png" title="image-20240728042909602" data-thumbnail="../../../img/image-20240728042909602.png">
+        <img
+            
+            loading="lazy"
+            src="../../../img/image-20240728042909602.png"
+            srcset="../../../img/image-20240728042909602.png, ../../../img/image-20240728042909602.png 1.5x, ../../../img/image-20240728042909602.png 2x"
+            sizes="auto"
+            alt="../../../img/image-20240728042909602.png">
+    </a></p>
+<p>kdc会对AS-REQ发送的<strong>TIMESTAMP</strong>进行验证，如果验证通过则会返回两个enc-part</p>
+<p>第一个包括了krbtgt密钥生成的TGT用于后续申请TGT</p>
+<p>第二个包括了使用用户hash加密的（<strong>Logon Session Key</strong>）用于客户端和TGS之间的通信。as-reproasting爆破的地方</p>
+<p>二者区别以及拓展：</p>
+<p>TGT本身是无用的，是krbtgt加密的不透明blob数据，普通用户无法解码，此时第二个数据发挥了作用，他是用户hash进行加密的，包含一组元数据，启动时间，结束时间，票据的更新期限，最重要的是包含一个Session Key会话密钥，TGT blob中也有</p>
+<p>那么用户如何使用TGT？用户能使用会话密钥加密的认证器，证明一开始就知道认证交换过程的会话密钥，所以TGT中也有会话密钥，因为TGT要被真正使用的前提是得知会话密钥。TGT续订和S4U请求都需要这个会话密钥</p>
+<h2 id="tgs-req" class="headerLink">
+    <a href="#tgs-req" class="header-mark"></a>5 TGS-REQ</h2><p><a class="lightgallery" href="../../../img/image-20240728042934551.png" title="image-20240728042934551" data-thumbnail="../../../img/image-20240728042934551.png">
+        <img
+            
+            loading="lazy"
+            src="../../../img/image-20240728042934551.png"
+            srcset="../../../img/image-20240728042934551.png, ../../../img/image-20240728042934551.png 1.5x, ../../../img/image-20240728042934551.png 2x"
+            sizes="auto"
+            alt="../../../img/image-20240728042934551.png">
+    </a></p>
+<p>ticket中第一个enc-part的票据部分与AS-REP的是一样的</p>
+<p>authenticator是时间戳和Logon session key加密的</p>
+<p><strong>req-body</strong>如下</p>
+<p><a class="lightgallery" href="../../../img/image-20240728044000333.png" title="image-20240728044000333" data-thumbnail="../../../img/image-20240728044000333.png">
+        <img
+            
+            loading="lazy"
+            src="../../../img/image-20240728044000333.png"
+            srcset="../../../img/image-20240728044000333.png, ../../../img/image-20240728044000333.png 1.5x, ../../../img/image-20240728044000333.png 2x"
+            sizes="auto"
+            alt="../../../img/image-20240728044000333.png">
+    </a></p>
+<p>请求16server1的host服务</p>
+<h2 id="tgs-rep" class="headerLink">
+    <a href="#tgs-rep" class="header-mark"></a>6 TGS-REP</h2><p><a class="lightgallery" href="../../../img/image-20240728044452346.png" title="image-20240728044452346" data-thumbnail="../../../img/image-20240728044452346.png">
+        <img
+            
+            loading="lazy"
+            src="../../../img/image-20240728044452346.png"
+            srcset="../../../img/image-20240728044452346.png, ../../../img/image-20240728044452346.png 1.5x, ../../../img/image-20240728044452346.png 2x"
+            sizes="auto"
+            alt="../../../img/image-20240728044452346.png">
+    </a></p>
+<p>第一个enc-part包含了TGS/ST，用ST去访问特定的服务（这里的host）</p>
+<p>第二个包含了<strong>Logon Session Key</strong>加密的<strong>Service Session Key</strong>，用于和服务之间的通信</p>
+</div>
+
+        
+
+
+<h2>相关内容</h2>
+<div class="related-container">
+    <div class="related-item-container">
+            <h2 class="related-title">
+                <a href="/2024/07/kerberos/">Kerberos</a>
+            </h2>
+        </div>
+    
+
+</div>
+
+<div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-07-28</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/2024/07/kerberos%E5%88%86%E6%9E%90/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span><span>|&nbsp;<a class="link-to-source" href=https://github.com/HEIGE-PCloud/DoIt/blob/main/exampleSite/content/posts\AD\Kerberos分析.md target="_blank" rel="noopener noreferrer">查看源代码</a>
+                    </span><span>|&nbsp;<a class="link-to-edit" href=https://github.com/HEIGE-PCloud/DoIt/edit/main/exampleSite/content/posts\AD\Kerberos分析.md target="_blank" rel="noopener noreferrer">编辑此页</a>
+                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/HEIGE-PCloud/DoIt/issues/new?title=[bug]%20Kerberos&body=|Field|Value|%0A|-|-|%0A|Title|Kerberos|%0A|Url|https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/|%0A|Filename|https://github.com/HEIGE-PCloud/DoIt/blob/main/exampleSite/content/posts\AD\Kerberos分析.md| target="_blank" rel="noopener noreferrer">报告问题</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/" data-title="Kerberos" data-hashtags=""><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/" data-hashtag=""><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/" data-title="Kerberos"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/" data-title="Kerberos"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/" data-title="Kerberos"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/" data-title="Kerberos" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/">Tags</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/2024/07/kerberos/" class="next" rel="next" title="Kerberos">Kerberos<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.1">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.2.13"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer">J1oo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"data":{"desktop-header-typeit":"J1oo的博客","mobile-header-typeit":"J1oo的博客"},"search":{"algoliaAppID":"EQEMZS178L","algoliaIndex":"blog","algoliaSearchKey":"4b80ca9a75e7787d55cbcc3154949e6c","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+</body>
+
+</html>

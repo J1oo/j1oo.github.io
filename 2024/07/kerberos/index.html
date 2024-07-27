@@ -6,21 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
     <title>Kerberos - J1oo</title><meta name="Description" content="Hugo DoIt 主题官方文档"><meta property="og:title" content="Kerberos" />
-<meta property="og:description" content="kerberos 分析kerberos 的主要步骤如下，重点分析前四步 AS-REQ AS-REP TGS-REQ TGS-REP AP-REQ AP-REP 1 AS-REQ在域控上抓包，查看机器登陆域用户时产生的流量 先看这一部分 pvn" />
+<meta property="og:description" content="" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://J1oo.github.io/2024/07/kerberos/" /><meta property="og:image" content="https://J1oo.github.io/images/avatar.webp" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-07-28T02:20:56+08:00" />
-<meta property="article:modified_time" content="2024-07-28T02:20:56+08:00" /><meta property="og:site_name" content="Hugo DoIt Theme Documentation" />
+<meta property="article:published_time" content="2024-07-28T04:54:51+08:00" />
+<meta property="article:modified_time" content="2024-07-28T04:54:51+08:00" /><meta property="og:site_name" content="Hugo DoIt Theme Documentation" />
+
+
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://J1oo.github.io/images/avatar.webp" /><meta name="twitter:title" content="Kerberos"/>
-<meta name="twitter:description" content="kerberos 分析kerberos 的主要步骤如下，重点分析前四步 AS-REQ AS-REP TGS-REQ TGS-REP AP-REQ AP-REP 1 AS-REQ在域控上抓包，查看机器登陆域用户时产生的流量 先看这一部分 pvn"/>
+<meta name="twitter:description" content=""/>
 <meta name="application-name" content="J1oo的博客">
 <meta name="apple-mobile-web-app-title" content="J1oo的博客">
 
 <meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://J1oo.github.io/2024/07/kerberos/" /><link rel="prev" href="https://J1oo.github.io/2024/07/test/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://J1oo.github.io/2024/07/kerberos/" /><link rel="prev" href="https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><meta name="google-site-verification" content="MQ8DNu27ayX6B_4ObiEDK09vGr1fdy7kOAnbd09hJk4" /><script type="application/ld+json">
     {
@@ -31,8 +33,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/J1oo.github.io\/2024\/07\/kerberos\/"
-        },"image": ["https:\/\/J1oo.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "","wordcount":  160 ,
-        "url": "https:\/\/J1oo.github.io\/2024\/07\/kerberos\/","datePublished": "2024-07-28T02:20:56+08:00","dateModified": "2024-07-28T02:20:56+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/J1oo.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "","wordcount":  0 ,
+        "url": "https:\/\/J1oo.github.io\/2024\/07\/kerberos\/","datePublished": "2024-07-28T04:54:51+08:00","dateModified": "2024-07-28T04:54:51+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
                     "@type": "ImageObject",
@@ -134,48 +136,20 @@
 <main class="main">
             <div class="container"><div class="toc" id="toc-auto">
         <h2 class="toc-title">目录</h2>
-        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#as-req">AS-REQ</a></li>
-  </ul>
-</nav></div>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents"></nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kerberos</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">J1oo</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/"><i class="far fa-folder fa-fw"></i>Categories</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/"><i class="far fa-list-alt fa-fw"></i>Series</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 160 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 0 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 0 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#as-req">AS-REQ</a></li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h1 id="kerberos-分析" class="headerLink">
-    <a href="#kerberos-%e5%88%86%e6%9e%90" class="header-mark"></a>kerberos 分析</h1><p>kerberos 的主要步骤如下，重点分析前四步</p>
-<ol>
-<li>AS-REQ</li>
-<li>AS-REP</li>
-<li>TGS-REQ</li>
-<li>TGS-REP</li>
-<li>AP-REQ</li>
-<li>AP-REP</li>
-</ol>
-<h2 id="as-req" class="headerLink">
-    <a href="#as-req" class="header-mark"></a>1 AS-REQ</h2><p>在域控上抓包，查看机器登陆域用户时产生的流量</p>
-<img src="../../../img/image-20240728012905687.png" alt="image-20240728012905687" style="zoom: 200%;" />
-<p>先看这一部分</p>
-<img src="../../../img/image-20240728013101500.png" alt="image-20240728013101500" style="zoom:200%;" />
-<p>pvno：5 代表 kerberos 协议的版本号</p>
-<p>msg-type 是消息类型</p>
-<p>padata：1 item 代表有一个数据项</p>
-<p>padata-type: pA-PAC-REQUEST (128)，<strong>这是一个 PAC 的请求</strong>，PAC 用于携带用户的特权信息比如 <strong>用户组、特权</strong></p>
-<p>padata-value: 3005a0030101ff，</p>
-</div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"></div>
 
         
 
@@ -184,7 +158,7 @@
 <div class="related-container">
     <div class="related-item-container">
             <h2 class="related-title">
-                <a href="/2024/07/test/">Test</a>
+                <a href="/2024/07/kerberos%E5%88%86%E6%9E%90/">Kerberos</a>
             </h2>
         </div>
     
@@ -201,9 +175,9 @@
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span><a class="link-to-mardown" href=/2024/07/kerberos/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
-                    </span><span>|&nbsp;<a class="link-to-source" href=https://github.com/HEIGE-PCloud/DoIt/blob/main/exampleSite/content/posts\AD\kerberos.md target="_blank" rel="noopener noreferrer">查看源代码</a>
-                    </span><span>|&nbsp;<a class="link-to-edit" href=https://github.com/HEIGE-PCloud/DoIt/edit/main/exampleSite/content/posts\AD\kerberos.md target="_blank" rel="noopener noreferrer">编辑此页</a>
-                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/HEIGE-PCloud/DoIt/issues/new?title=[bug]%20Kerberos&body=|Field|Value|%0A|-|-|%0A|Title|Kerberos|%0A|Url|https://J1oo.github.io/2024/07/kerberos/|%0A|Filename|https://github.com/HEIGE-PCloud/DoIt/blob/main/exampleSite/content/posts\AD\kerberos.md| target="_blank" rel="noopener noreferrer">报告问题</a>
+                    </span><span>|&nbsp;<a class="link-to-source" href=https://github.com/HEIGE-PCloud/DoIt/blob/main/exampleSite/content/posts\AD\Kerberos.md target="_blank" rel="noopener noreferrer">查看源代码</a>
+                    </span><span>|&nbsp;<a class="link-to-edit" href=https://github.com/HEIGE-PCloud/DoIt/edit/main/exampleSite/content/posts\AD\Kerberos.md target="_blank" rel="noopener noreferrer">编辑此页</a>
+                    </span><span>|&nbsp;<a class="link-to-report" href=https://github.com/HEIGE-PCloud/DoIt/issues/new?title=[bug]%20Kerberos&body=|Field|Value|%0A|-|-|%0A|Title|Kerberos|%0A|Url|https://J1oo.github.io/2024/07/kerberos/|%0A|Filename|https://github.com/HEIGE-PCloud/DoIt/blob/main/exampleSite/content/posts\AD\Kerberos.md| target="_blank" rel="noopener noreferrer">报告问题</a>
                     </span></div>
             <div class="post-info-share">
                 <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://J1oo.github.io/2024/07/kerberos/" data-title="Kerberos" data-hashtags=""><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://J1oo.github.io/2024/07/kerberos/" data-hashtag=""><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://J1oo.github.io/2024/07/kerberos/" data-title="Kerberos"><i class="fab fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://J1oo.github.io/2024/07/kerberos/" data-title="Kerberos"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://J1oo.github.io/2024/07/kerberos/" data-title="Kerberos"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Telegram" data-sharer="telegram" data-url="https://J1oo.github.io/2024/07/kerberos/" data-title="Kerberos" data-web><i class="fab fa-telegram-plane fa-fw"></i></a></span>
@@ -218,7 +192,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2024/07/test/" class="prev" rel="prev" title="Test"><i class="fas fa-angle-left fa-fw"></i>Test</a></div>
+    <div class="post-nav"><a href="/2024/07/kerberos%E5%88%86%E6%9E%90/" class="prev" rel="prev" title="Kerberos"><i class="fas fa-angle-left fa-fw"></i>Kerberos</a></div>
 </div>
 </article></div>
         </main><footer class="footer">
