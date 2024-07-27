@@ -5,7 +5,7 @@
 
 /* 调整文章中图片的显示尺寸 */
 .content img {
-    max-width: 150%; /* 让图片显示更大 */
+    max-width: 200%; /* 让图片显示更大 */
     height: auto; /* 保持图片的原始比例 */
     display: block; /* 去除图片的默认内边距 */
     margin: 20px 0; /* 增加上下边距 */
