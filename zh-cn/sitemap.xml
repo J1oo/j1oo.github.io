@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://J1oo.github.io/</loc><lastmod>2024-07-27T06:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://J1oo.github.io/</loc><lastmod>2024-07-28T02:20:56&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://J1oo.github.io/en/"
@@ -11,7 +11,8 @@
                     hreflang="zh-cn"
                     href="https://J1oo.github.io/"
                     /></url><url>
-            <loc>https://J1oo.github.io/posts/</loc><lastmod>2024-07-27T06:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://J1oo.github.io/2024/07/kerberos/</loc><lastmod>2024-07-28T02:20:56&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://J1oo.github.io/posts/</loc><lastmod>2024-07-28T02:20:56&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://J1oo.github.io/2024/07/test/</loc><lastmod>2024-07-27T06:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://J1oo.github.io/authors/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
