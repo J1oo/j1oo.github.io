@@ -18,7 +18,7 @@
 
 /* 调整图片的显示比例（宽高比） */
 .main .container img {
-    width: 150%; /* 调整宽度 */
+    width: 100%; /* 调整宽度 */
     height: auto; /* 调整高度 */
     object-fit: contain; /* 确保图片填满容器 */
 }
@@ -33,7 +33,7 @@
 
 /* 调整 Markdown 文章的行间距 */
 .content {
-    width: 150%; /* 使内容宽度尽可能大 */
+    width: 110%; /* 使内容宽度尽可能大 */
     max-width: 1200px; /* 设置内容最大宽度 */
     margin: 0 auto; /* 居中对齐 */
 }
