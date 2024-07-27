@@ -12,6 +12,11 @@
     margin: 10px auto; /* 居中对齐，并增加上下边距 */
 }
 
+@media (max-width: 768px) {
+    .content img {
+        max-width: 100%; /* 在小屏幕上恢复到默认宽度 */
+    }
+}
 
 .content p {
     line-height: 1.8; /* 你可以根据需要调整这个值 */
