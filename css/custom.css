@@ -1,14 +1,18 @@
 /* 调整文章内容的最大宽度 */
 .main .container {
     max-width: 100%; /* 你可以根据需要调整这个百分比 */
+    margin: 0 auto; /* 居中对齐 */
 }
 
 /* 调整文章中图片的显示尺寸 */
 .main .container img {
     width: 150%; /* 让图片根据行宽自动调整 */
+    max-width: 1200px; /* 设置最大宽度，防止图片过大 */
     height: 150%; /* 保持图片的原始比例 */
     display: block; /* 去除图片的默认内边距 */
+    margin: 10px 0; /* 增加上下边距 */
     border: 2px solid #ddd; /* 添加边框，使图片更加突出 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
     object-fit: contain; /* 确保图片在调整大小时保持良好的显示效果 */
 }
 
@@ -16,13 +20,14 @@
 .main .container img {
     width: 150%; /* 调整宽度 */
     height: 150%; /* 调整高度 */
-    object-fit: cover; /* 确保图片填满容器 */
+    object-fit: contain; /* 确保图片填满容器 */
 }
 
 /* 调整文章中图片在小屏幕上的显示尺寸 */
 @media (max-width: 768px) {
     .main .container img {
         width: 100%; /* 在小屏幕上恢复到默认宽度 */
+        max-width: 100%; /* 确保图片不会超过容器宽度 */
     }
 }
 
