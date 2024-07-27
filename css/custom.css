@@ -23,7 +23,6 @@
 .main .content img {
     width: auto; /* 根据内容调整宽度 */
     max-width: 100%; /* 确保图片不会超过容器宽度 */
-    height: auto; /* 保持图片的原始比例 */
     display: block; /* 去除图片的默认内边距 */
     object-fit: contain; /* 确保图片在调整大小时保持良好的显示效果 */
     margin: 10px auto; /* 居中对齐并增加上下边距 */
@@ -37,16 +36,7 @@
 }
 
 /* 调整文章中图片在小屏幕上的显示尺寸 */
-@media (max-width: 768px) {
-    .main .container {
-        flex-direction: column; /* 在小屏幕上堆叠布局 */
-    }
 
-    .main .sidebar {
-        width: 100%; /* 在小屏幕上侧边栏占满宽度 */
-        margin-top: 20px; /* 增加顶部间距 */
-    }
-}
 
 /* 调整 Markdown 文章的行间距 */
 .content p {
