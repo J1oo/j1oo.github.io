@@ -1,0 +1,5 @@
+.enlarged-image img {
+    width: 100%;
+    height: auto;
+    max-width: 800px; /* 根据需要调整 */
+}
