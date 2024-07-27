@@ -1,23 +1,32 @@
 /* 调整文章内容的最大宽度 */
 .main .container {
-    max-width: 200%; /* 你可以根据需要调整这个百分比 */
-    margin: 0 auto; /* 居中对齐 */
+    max-width: 100%; /* 你可以根据需要调整这个百分比 */
 }
 
 /* 调整文章中图片的显示尺寸 */
 .main .container img {
-    max-width: 200%; /* 让图片根据行宽自动调整 */
-    height: auto; /* 保持图片的原始比例 */
+    width: 200%; /* 让图片根据行宽自动调整 */
+    height: 150%; /* 保持图片的原始比例 */
     display: block; /* 去除图片的默认内边距 */
-    margin: 10px auto; /* 居中对齐，并增加上下边距 */
+    border: 2px solid #ddd; /* 添加边框，使图片更加突出 */
+    object-fit: contain; /* 确保图片在调整大小时保持良好的显示效果 */
 }
 
+/* 调整图片的显示比例（宽高比） */
+.main .container img {
+    width: 200%; /* 调整宽度 */
+    height: 200%; /* 调整高度 */
+    object-fit: cover; /* 确保图片填满容器 */
+}
+
+/* 调整文章中图片在小屏幕上的显示尺寸 */
 @media (max-width: 768px) {
-    .content img {
-        max-width: 100%; /* 在小屏幕上恢复到默认宽度 */
+    .main .container img {
+        width: 100%; /* 在小屏幕上恢复到默认宽度 */
     }
 }
 
+/* 调整 Markdown 文章的行间距 */
 .content p {
     line-height: 1.8; /* 你可以根据需要调整这个值 */
     margin-bottom: 1.5em; /* 增加段落之间的间距 */
