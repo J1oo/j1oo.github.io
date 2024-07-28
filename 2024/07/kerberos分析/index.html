@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/J1oo.github.io\/2024\/07\/kerberos%E5%88%86%E6%9E%90\/"
-        },"image": ["https:\/\/J1oo.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "","wordcount":  1487 ,
+        },"image": ["https:\/\/J1oo.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "","wordcount":  1969 ,
         "url": "https:\/\/J1oo.github.io\/2024\/07\/kerberos%E5%88%86%E6%9E%90\/","datePublished": "2024-07-28T04:54:51+08:00","dateModified": "2024-07-28T04:54:51+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
@@ -144,14 +144,16 @@
     <li><a href="#as-rep2">AS-REP(2)</a></li>
     <li><a href="#tgs-req">TGS-REQ</a></li>
     <li><a href="#tgs-rep">TGS-REP</a></li>
+    <li><a href="#ap-req">AP-REQ</a></li>
+    <li><a href="#ap-rep">AP-REP</a></li>
   </ul>
 </nav></div>
     </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kerberos分析</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">J1oo</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/"><i class="far fa-folder fa-fw"></i>Categories</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/ad/"><i class="far fa-list-alt fa-fw"></i>AD</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1487 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1969 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
                                     <span>系列 - AD</span>
@@ -175,6 +177,8 @@
     <li><a href="#as-rep2">AS-REP(2)</a></li>
     <li><a href="#tgs-req">TGS-REQ</a></li>
     <li><a href="#tgs-rep">TGS-REP</a></li>
+    <li><a href="#ap-req">AP-REQ</a></li>
+    <li><a href="#ap-rep">AP-REP</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>kerberos 的主要步骤如下，重点分析前四步</p>
@@ -260,22 +264,32 @@ pvno：5 代表 kerberos 协议的版本号
 <h2 id="as-rep2" class="headerLink">
     <a href="#as-rep2" class="header-mark"></a>4 AS-REP(2)</h2><img src="../../../img/image-20240728042909602.png" alt="image-20240728042909602" style="zoom:150%;" />
 <p>kdc会对AS-REQ发送的<strong>TIMESTAMP</strong>进行验证，如果验证通过则会返回两个enc-part</p>
-<p>第一个包括了krbtgt密钥生成的TGT用于后续申请TGT</p>
+<p>第一个包括了krbtgt密钥生成的TGT用于后续申请TGS，TGT 主要包含Login Session Key、时间戳和 PAC</p>
 <p>第二个包括了使用用户hash加密的（<strong>Logon Session Key</strong>）用于客户端和TGS之间的通信。as-reproasting爆破的地方</p>
 <p>二者区别以及拓展：</p>
 <p>TGT本身是无用的，是krbtgt加密的不透明blob数据，普通用户无法解码，此时第二个数据发挥了作用，他是用户hash进行加密的，包含一组元数据，启动时间，结束时间，票据的更新期限，最重要的是包含一个Session Key会话密钥，TGT blob中也有</p>
 <p>那么用户如何使用TGT？用户能使用会话密钥加密的认证器，证明一开始就知道认证交换过程的会话密钥，所以TGT中也有会话密钥，因为TGT要被真正使用的前提是得知会话密钥。TGT续订和S4U请求都需要这个会话密钥</p>
 <h2 id="tgs-req" class="headerLink">
-    <a href="#tgs-req" class="header-mark"></a>5 TGS-REQ</h2><img src="../../../img/image-20240728042934551.png" alt="image-20240728042934551" style="zoom:150%;" />
+    <a href="#tgs-req" class="header-mark"></a>5 TGS-REQ</h2><p>用户拿到TGT票据，使用自己的hash解密AS-REP的<strong>第二个enc-part</strong>加密部分获得Logon Session Key，用Logon Session Key加密用户名、时间戳等信息，和TGT一起向KDC的TGS服务发起请求，请求服务票据</p>
+<img src="../../../img/image-20240728042934551.png" alt="image-20240728042934551" style="zoom:150%;" />
 <p>ticket中第一个enc-part的票据部分与AS-REP的是一样的</p>
-<p>authenticator是时间戳和Logon session key加密的</p>
+<p>authenticator是用户名、时间戳和Logon session key加密的</p>
 <p><strong>req-body</strong>如下</p>
 <img src="../../../img/image-20240728044000333.png" alt="image-20240728044000333" style="zoom:150%;" />
 <p>请求16server1的host服务</p>
 <h2 id="tgs-rep" class="headerLink">
-    <a href="#tgs-rep" class="header-mark"></a>6 TGS-REP</h2><img src="../../../img/image-20240728044452346.png" alt="image-20240728044452346" style="zoom:150%;" />
+    <a href="#tgs-rep" class="header-mark"></a>6 TGS-REP</h2><p>TGS服务收到请求后，<strong>通过krbtgt用户的NTML hash解密TGT并且得到Login Session Key</strong>，使用<strong>Logon Session Key</strong>对<strong>authenticator</strong>解密，获取到用户名和时间戳，检查时间戳是否在有效范围内，校对成功会返回ST和加密的<strong>Service Session Key</strong></p>
+<img src="../../../img/image-20240728044452346.png" alt="image-20240728044452346" style="zoom:150%;" />
 <p>第一个enc-part包含了TGS/ST，用ST去访问特定的服务（这里的host）</p>
-<p>第二个包含了<strong>Logon Session Key</strong>加密的<strong>Service Session Key</strong>，用于和服务之间的通信</p>
+<p>第二个包含了用<strong>Logon Session Key</strong>加密的<strong>Service Session Key</strong>，用于和服务之间的通信</p>
+<h2 id="ap-req" class="headerLink">
+    <a href="#ap-req" class="header-mark"></a>7 AP-REQ</h2><p>此时在机器上使用如下指令查看AP-REQ</p>
+<p><code>net use Z: \\dc2016.mango.com\C$ /user:mango.com\administrator</code></p>
+<p>用户用<strong>Logon Session Key</strong>解密TGS-REP的enc-pat2的加密部分，得到<strong>Service Session Key</strong>，把用户名，时间戳等信息用Service Session Key加密（下面的authenticator），和ST一起发送给目标服务</p>
+<img src="../../../img/image-20240728225502845.png" alt="image-20240728225502845" style="zoom:150%;" />
+<h2 id="ap-rep" class="headerLink">
+    <a href="#ap-rep" class="header-mark"></a>8 AP-REP</h2><p>服务收到用户的ST，用自己的hash解密得到<strong>Server Session Key</strong>，再用这个key去解密authenticator，进行用户名，时间戳校对</p>
+<img src="../../../img/image-20240728225850247.png" alt="image-20240728225850247" style="zoom:150%;" />
 </div>
 
         
