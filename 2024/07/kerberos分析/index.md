@@ -13,9 +13,7 @@ kerberos 的主要步骤如下，重点分析前四步
 
 在域控上抓包，查看机器登陆域用户时产生的流量
 
-![Kerberos分析_image_1](../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png)
-
-发现AS-REQ会进行两次，原因是开启了域身份验证，第一次的AS-REQ相比第二次会少一部分
+![../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png](https://j1oo.github.io/img/Kerberos%E5%88%86%E6%9E%90_image_1.png)发现AS-REQ会进行两次，原因是开启了域身份验证，第一次的AS-REQ相比第二次会少一部分
 
 <img src="../../../img/image-20240728012905687.png" alt="image-20240728012905687" style="zoom: 200%;" />
 先看这一部分
@@ -36,7 +34,7 @@ padata-value: 3005a0030101ff，一个16进制值，后面的ff代表true，跟in
 
 用于指示客户端对KDC提出的要求和期望，KDC-OPTIONS是一个位掩码，每个位代表一个选项，可以是开启（True）或关闭（False）
 
-<img src="../../../img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png" alt="tmp1722109319199_Kerberos分析_image_2" style="zoom:150%;" />cname顾名思义client name，包括请求者的用户信息，域
+![tmp1722109319199_Kerberos分析_image_2](https://j1oo.github.io/img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png)cname顾名思义client name，包括请求者的用户信息，域
 
 sname包含的是服务端的身份krbtgt和域，till是到期时间，nonce是随机生成数
 
@@ -44,9 +42,7 @@ etype为加密类型，列出多个加密类型，确保客户端和KDC之间至
 
 ## AS-REP
 
-<img src="../../../img/image-20240728034646118.png" alt="image-20240728034646118" style="zoom:150%;" />
-
-看到一个krb-err消息，表示需要`eRR-PREAUTH-REQUIRED` 表示需要预身份验证（错误代码25）
+![image-20240728034646118](https://j1oo.github.io/img/image-20240728034646118.png)看到一个krb-err消息，表示需要`eRR-PREAUTH-REQUIRED` 表示需要预身份验证（错误代码25）
 
 e-data是错误消息的附加数据，包含多个预认证数据项（PA-DATA）
 
@@ -54,9 +50,7 @@ padata-type：预认证数据类型，这里是 `pA-ETYPE-INFO2`（类型值19�
 
 patada-type：包含加密类型和盐值
 
-![image-20240728035204246](../../../img/image-20240728035204246.png)
-
-**PA-DATA pA-ENC-TIMESTAMP**
+![../../../img/image-20240728035204246.png](https://j1oo.github.io/img/image-20240728035204246.png)**PA-DATA pA-ENC-TIMESTAMP**
 
 - padata-type: pA-ENC-TIMESTAMP (2)
   - 预认证数据类型，这里是 `pA-ENC-TIMESTAMP`（类型值2）。
@@ -81,9 +75,7 @@ patada-type：包含加密类型和盐值
 
 ## AS-REQ(2)
 
-<img src="../../../img/image-20240728035649648.png" alt="image-20240728035649648" style="zoom:150%;" />
-
-可见带上了TIMESTAMP，其中的cipher：一个用用户密码对时间戳进行加密的值
+![image-20240728035649648](https://j1oo.github.io/img/image-20240728035649648.png)可见带上了TIMESTAMP，其中的cipher：一个用用户密码对时间戳进行加密的值
 
 ## AS-REP(2)
 
