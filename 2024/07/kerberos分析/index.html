@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/J1oo.github.io\/2024\/07\/kerberos%E5%88%86%E6%9E%90\/"
-        },"image": ["https:\/\/J1oo.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "","wordcount":  1482 ,
+        },"image": ["https:\/\/J1oo.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "","wordcount":  1487 ,
         "url": "https:\/\/J1oo.github.io\/2024\/07\/kerberos%E5%88%86%E6%9E%90\/","datePublished": "2024-07-28T04:54:51+08:00","dateModified": "2024-07-28T04:54:51+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
@@ -150,7 +150,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">J1oo</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/categories/"><i class="far fa-folder fa-fw"></i>Categories</a></span>&nbsp;<span class="post-category">和</span>&nbsp;<span class="post-series">系列 <a href="/series/ad/"><i class="far fa-list-alt fa-fw"></i>AD</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1482 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-28">2024-07-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1487 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details series-nav open">
                                 <div class="details-summary series-title">
@@ -203,27 +203,11 @@ pvno：5 代表 kerberos 协议的版本号
 <p>sname包含的是服务端的身份krbtgt和域，till是到期时间，nonce是随机生成数</p>
 <p>etype为加密类型，列出多个加密类型，确保客户端和KDC之间至少有一个支持的加密算法</p>
 <h2 id="as-rep" class="headerLink">
-    <a href="#as-rep" class="header-mark"></a>2 AS-REP</h2><p><a class="lightgallery" href="https://j1oo.github.io/img/image-20240728034646118.png" title="image-20240728034646118" data-thumbnail="https://j1oo.github.io/img/image-20240728034646118.png">
-        <img
-            
-            loading="lazy"
-            src="https://j1oo.github.io/img/image-20240728034646118.png"
-            srcset="https://j1oo.github.io/img/image-20240728034646118.png, https://j1oo.github.io/img/image-20240728034646118.png 1.5x, https://j1oo.github.io/img/image-20240728034646118.png 2x"
-            sizes="auto"
-            alt="https://j1oo.github.io/img/image-20240728034646118.png">
-    </a>看到一个krb-err消息，表示需要<code>eRR-PREAUTH-REQUIRED</code> 表示需要预身份验证（错误代码25）</p>
+    <a href="#as-rep" class="header-mark"></a>2 AS-REP</h2><p><img src="../../../img/image-20240728214319848.png" alt="image-20240728214319848" style="zoom:150%;" />看到一个krb-err消息，表示需要<code>eRR-PREAUTH-REQUIRED</code> 表示需要预身份验证（错误代码25)</p>
 <p>e-data是错误消息的附加数据，包含多个预认证数据项（PA-DATA）</p>
 <p>padata-type：预认证数据类型，这里是 <code>pA-ETYPE-INFO2</code>（类型值19）</p>
 <p>patada-type：包含加密类型和盐值</p>
-<p><a class="lightgallery" href="https://j1oo.github.io/img/image-20240728035204246.png" title="../../../img/image-20240728035204246.png" data-thumbnail="https://j1oo.github.io/img/image-20240728035204246.png">
-        <img
-            
-            loading="lazy"
-            src="https://j1oo.github.io/img/image-20240728035204246.png"
-            srcset="https://j1oo.github.io/img/image-20240728035204246.png, https://j1oo.github.io/img/image-20240728035204246.png 1.5x, https://j1oo.github.io/img/image-20240728035204246.png 2x"
-            sizes="auto"
-            alt="https://j1oo.github.io/img/image-20240728035204246.png">
-    </a><strong>PA-DATA pA-ENC-TIMESTAMP</strong></p>
+<p><img src="../../../img/image-20240728214350215.png" alt="image-20240728214350215" style="zoom:150%;" /><strong>PA-DATA pA-ENC-TIMESTAMP</strong></p>
 <ul>
 <li>padata-type: pA-ENC-TIMESTAMP (2)
 <ul>
@@ -264,14 +248,14 @@ pvno：5 代表 kerberos 协议的版本号
 </ul>
 <p>所以接下来会进行第二次的AS-REQ</p>
 <h2 id="as-req2" class="headerLink">
-    <a href="#as-req2" class="header-mark"></a>3 AS-REQ(2)</h2><p><a class="lightgallery" href="https://j1oo.github.io/img/image-20240728035649648.png" title="image-20240728035649648" data-thumbnail="https://j1oo.github.io/img/image-20240728035649648.png">
+    <a href="#as-req2" class="header-mark"></a>3 AS-REQ(2)</h2><p><a class="lightgallery" href="../../../img/image-20240728214424072.png" title="image-20240728214424072" data-thumbnail="../../../img/image-20240728214424072.png">
         <img
             
             loading="lazy"
-            src="https://j1oo.github.io/img/image-20240728035649648.png"
-            srcset="https://j1oo.github.io/img/image-20240728035649648.png, https://j1oo.github.io/img/image-20240728035649648.png 1.5x, https://j1oo.github.io/img/image-20240728035649648.png 2x"
+            src="../../../img/image-20240728214424072.png"
+            srcset="../../../img/image-20240728214424072.png, ../../../img/image-20240728214424072.png 1.5x, ../../../img/image-20240728214424072.png 2x"
             sizes="auto"
-            alt="https://j1oo.github.io/img/image-20240728035649648.png">
+            alt="../../../img/image-20240728214424072.png">
     </a>可见带上了TIMESTAMP，其中的cipher：一个用用户密码对时间戳进行加密的值</p>
 <h2 id="as-rep2" class="headerLink">
     <a href="#as-rep2" class="header-mark"></a>4 AS-REP(2)</h2><img src="../../../img/image-20240728042909602.png" alt="image-20240728042909602" style="zoom:150%;" />

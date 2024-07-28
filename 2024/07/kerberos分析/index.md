@@ -42,7 +42,7 @@ etype为加密类型，列出多个加密类型，确保客户端和KDC之间至
 
 ## AS-REP
 
-![image-20240728034646118](https://j1oo.github.io/img/image-20240728034646118.png)看到一个krb-err消息，表示需要`eRR-PREAUTH-REQUIRED` 表示需要预身份验证（错误代码25）
+<img src="../../../img/image-20240728214319848.png" alt="image-20240728214319848" style="zoom:150%;" />看到一个krb-err消息，表示需要`eRR-PREAUTH-REQUIRED` 表示需要预身份验证（错误代码25)
 
 e-data是错误消息的附加数据，包含多个预认证数据项（PA-DATA）
 
@@ -50,7 +50,7 @@ padata-type：预认证数据类型，这里是 `pA-ETYPE-INFO2`（类型值19�
 
 patada-type：包含加密类型和盐值
 
-![../../../img/image-20240728035204246.png](https://j1oo.github.io/img/image-20240728035204246.png)**PA-DATA pA-ENC-TIMESTAMP**
+<img src="../../../img/image-20240728214350215.png" alt="image-20240728214350215" style="zoom:150%;" />**PA-DATA pA-ENC-TIMESTAMP**
 
 - padata-type: pA-ENC-TIMESTAMP (2)
   - 预认证数据类型，这里是 `pA-ENC-TIMESTAMP`（类型值2）。
@@ -75,7 +75,7 @@ patada-type：包含加密类型和盐值
 
 ## AS-REQ(2)
 
-![image-20240728035649648](https://j1oo.github.io/img/image-20240728035649648.png)可见带上了TIMESTAMP，其中的cipher：一个用用户密码对时间戳进行加密的值
+![image-20240728214424072](../../../img/image-20240728214424072.png)可见带上了TIMESTAMP，其中的cipher：一个用用户密码对时间戳进行加密的值
 
 ## AS-REP(2)
 
