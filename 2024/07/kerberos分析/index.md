@@ -13,7 +13,7 @@ kerberos 的主要步骤如下，重点分析前四步
 
 在域控上抓包，查看机器登陆域用户时产生的流量
 
-![../../../img/Kerberos%E5%88%86%E6%9E%90_image_1.png](https://j1oo.github.io/img/Kerberos%E5%88%86%E6%9E%90_image_1.png)发现AS-REQ会进行两次，原因是开启了域身份验证，第一次的AS-REQ相比第二次会少一部分
+<img src="../../../img/image-20240728212856955.png" alt="image-20240728212856955" style="zoom:150%;" />发现AS-REQ会进行两次，原因是开启了域身份验证，第一次的AS-REQ相比第二次会少一部分
 
 <img src="../../../img/image-20240728012905687.png" alt="image-20240728012905687" style="zoom: 200%;" />
 先看这一部分
@@ -34,7 +34,7 @@ padata-value: 3005a0030101ff，一个16进制值，后面的ff代表true，跟in
 
 用于指示客户端对KDC提出的要求和期望，KDC-OPTIONS是一个位掩码，每个位代表一个选项，可以是开启（True）或关闭（False）
 
-![tmp1722109319199_Kerberos分析_image_2](https://j1oo.github.io/img/tmp1722109319199_Kerberos%E5%88%86%E6%9E%90_image_2.png)cname顾名思义client name，包括请求者的用户信息，域
+<img src="../../../img/Kerberos%E5%88%86%E6%9E%90_image_2.png" alt="Kerberos分析_image_2" style="zoom:150%;" />cname顾名思义client name，包括请求者的用户信息，域
 
 sname包含的是服务端的身份krbtgt和域，till是到期时间，nonce是随机生成数
 
