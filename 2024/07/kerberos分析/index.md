@@ -135,7 +135,3 @@ TGS服务收到请求后，**通过krbtgt用户的NTML hash解密TGT并且得到
 
 <img src="../../../img/image-20240728225850247.png" alt="image-20240728225850247" style="zoom:150%;" />
 
-
-
-![image-20240731165421130](../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240731165421130.png)
-
