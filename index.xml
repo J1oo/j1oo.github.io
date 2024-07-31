@@ -3,16 +3,9 @@
         <title>J1oo</title>
         <link>https://J1oo.github.io/</link>
         <description>Hugo DoIt 主题官方文档</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 29 Jul 2024 03:57:17 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 28 Jul 2024 04:54:51 &#43;0800</lastBuildDate>
             <atom:link href="https://J1oo.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>NTLM</title>
-    <link>https://J1oo.github.io/2024/07/ntlm/</link>
-    <pubDate>Mon, 29 Jul 2024 03:57:17 &#43;0800</pubDate><author>
-        <name>J1oo</name>
-    </author><guid>https://J1oo.github.io/2024/07/ntlm/</guid>
-    <description><![CDATA[kerberos出现之前，NTLM被广泛应用于工作组和域环境，是更早的用于对用户进行身份验证的协议 NTLM主要通过对比客户端和服务端加密后的]]></description>
-</item><item>
     <title>Kerberos分析</title>
     <link>https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/</link>
     <pubDate>Sun, 28 Jul 2024 04:54:51 &#43;0800</pubDate><author>
