@@ -170,7 +170,13 @@ KDC会从**authenticator**中提取出**subkey**把PAC信息解密，然后对PA
 
 
 
+参考
 
+https://y4er.com/posts/kerberos-pac/
+
+https://daiker.gitbook.io/windows-protocol/kerberos/3
+
+https://loong716.top/posts/Kerberos/
 
 
 
