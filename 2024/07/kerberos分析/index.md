@@ -2,6 +2,7 @@
 
 
 kerberos 的主要步骤如下，重点分析前四步
+
 1. AS-REQ
 2. AS-REP
 3. TGS-REQ
@@ -134,4 +135,93 @@ TGS服务收到请求后，**通过krbtgt用户的NTML hash解密TGT并且得到
 服务收到用户的ST，用自己的hash解密得到**Server Session Key**，再用这个key去解密authenticator，进行用户名，时间戳校对
 
 <img src="../../../img/image-20240728225850247.png" alt="image-20240728225850247" style="zoom:150%;" />
+
+## PAC
+
+在上面的流程里面，只要用户的hash正确，那么就可以拿到TGT，有了TGT，就可以拿到TGS，有了TGS，就可以访问服务，任何一个用户都可以访问任何服务。但是没有证明自己的权限，也就是说，服务端不知道客户端能做什么，是否有权限来访问自己的资源，于是引入了PAC这个概念
+
+PAC(权限属性证书)，会决定用户使用票据的权限，PAC有请求用户的User SID和Group SID，并且被设置有签名来防止篡改，分别是**服务校验和**（服务端的密钥加密）和**KDC校验和**（krbtgt密钥加密）
+
+用户可以凭借TGT向KDC发起针对特定服务的TGS_REQ请求，只要KDC能用krbtgt hash成功解密TGT，就会返回ST，这一步不管用户是否有访问服务的权限，都会返回ST票据，kerberoasting正是基于此，**任何用户都可以得到任意的ST票据**，用户拿ST去请求访问服务，假如服务端不验证PAC，那么请求通过，假如验证PAC则需要KDC进行验证，比对sid以及所在组。
+
+简单说下自己理解的PAC参与到kerberos的过程
+
+AS-REP中，返回TGT的时候会在TGT中附带PAC，下图是两个校验和
+
+![image-20240803140526101](../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png)
+
+Logon信息包括用户名，sid等
+
+![image-20240803142411318](../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png)
+
+然后PAC会在TGS-REP阶段，出现在ST里，最终在AP-REP阶段被KDC进行校验
+
+### MS14-068
+
+微软对PAC的设计加密规定是HMAC系列的checksum算法，这个算法需要密钥，krbtgt和服务端密码，但我们不知道这两个密钥，所以不可能伪造PAC
+
+而在实际情况中，Windows却允许使用任意算法来计算校验和，加密算法由客户端指定，当指定了MD5时，不需要密钥，我们可以修改PAC的内容，然后把校验和设置为PAC的MD5值
+
+之前提过PAC是在AS-REP阶段被放在TGT的，但ms14-068中PAC没有被放在TGT中，而是放在了TGS_REQ数据包的req-body中。KDC在实现上竟然允许这样的构造，也就是说，KDC能够正确解析出放在其它地方（不在TGT）的PAC信息。
+
+![image-20240803171344721](../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png)
+
+KDC会从**authenticator**中提取出**subkey**把PAC信息解密，然后对PAC数据进行MD5加密得到一个值，发现和TGS-REQ发送来的校验和一致，于是通过验证。并且用客户端指定的（MD5）算法重新使用Server_Key和KDC_Key在PAC尾部生成签名，把Session key用subkey加密，组合成一个新的TGT返回给客户端
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+python goldenPac.py mango.com/hack:pass@123@192.168.72.151
+```
+
 
