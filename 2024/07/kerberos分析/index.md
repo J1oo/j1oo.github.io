@@ -148,11 +148,11 @@ PAC(权限属性证书)，会决定用户使用票据的权限，PAC有请求用
 
 AS-REP中，返回TGT的时候会在TGT中附带PAC，下图是两个校验和
 
-![image-20240803140526101](../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png)
+<img src="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png" alt="image-20240803140526101" style="zoom:150%;" />
 
 Logon信息包括用户名，sid等
 
-![image-20240803142411318](../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png)
+<img src="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png" alt="image-20240803142411318" style="zoom:150%;" />
 
 然后PAC会在TGS-REP阶段，出现在ST里，最终在AP-REP阶段被KDC进行校验
 
@@ -164,7 +164,7 @@ Logon信息包括用户名，sid等
 
 之前提过PAC是在AS-REP阶段被放在TGT的，但ms14-068中PAC没有被放在TGT中，而是放在了TGS_REQ数据包的req-body中。KDC在实现上竟然允许这样的构造，也就是说，KDC能够正确解析出放在其它地方（不在TGT）的PAC信息。
 
-![image-20240803171344721](../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png)
+<img src="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png" alt="image-20240803171344721" style="zoom:150%;" />
 
 KDC会从**authenticator**中提取出**subkey**把PAC信息解密，然后对PAC数据进行MD5加密得到一个值，发现和TGS-REQ发送来的校验和一致，于是通过验证。并且用客户端指定的（MD5）算法重新使用Server_Key和KDC_Key在PAC尾部生成签名，把Session key用subkey加密，组合成一个新的TGT返回给客户端
 

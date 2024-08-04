@@ -306,39 +306,15 @@ pvno：5 代表 kerberos 协议的版本号
 <p>用户可以凭借TGT向KDC发起针对特定服务的TGS_REQ请求，只要KDC能用krbtgt hash成功解密TGT，就会返回ST，这一步不管用户是否有访问服务的权限，都会返回ST票据，kerberoasting正是基于此，<strong>任何用户都可以得到任意的ST票据</strong>，用户拿ST去请求访问服务，假如服务端不验证PAC，那么请求通过，假如验证PAC则需要KDC进行验证，比对sid以及所在组。</p>
 <p>简单说下自己理解的PAC参与到kerberos的过程</p>
 <p>AS-REP中，返回TGT的时候会在TGT中附带PAC，下图是两个校验和</p>
-<p><a class="lightgallery" href="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png" title="image-20240803140526101" data-thumbnail="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png"
-            srcset="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png, ../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png 1.5x, ../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png 2x"
-            sizes="auto"
-            alt="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png">
-    </a></p>
+<img src="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803140526101.png" alt="image-20240803140526101" style="zoom:150%;" />
 <p>Logon信息包括用户名，sid等</p>
-<p><a class="lightgallery" href="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png" title="image-20240803142411318" data-thumbnail="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png"
-            srcset="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png, ../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png 1.5x, ../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png 2x"
-            sizes="auto"
-            alt="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png">
-    </a></p>
+<img src="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803142411318.png" alt="image-20240803142411318" style="zoom:150%;" />
 <p>然后PAC会在TGS-REP阶段，出现在ST里，最终在AP-REP阶段被KDC进行校验</p>
 <h3 id="ms14-068" class="headerLink">
     <a href="#ms14-068" class="header-mark"></a>9.1 MS14-068</h3><p>微软对PAC的设计加密规定是HMAC系列的checksum算法，这个算法需要密钥，krbtgt和服务端密码，但我们不知道这两个密钥，所以不可能伪造PAC</p>
 <p>而在实际情况中，Windows却允许使用任意算法来计算校验和，加密算法由客户端指定，当指定了MD5时，不需要密钥，我们可以修改PAC的内容，然后把校验和设置为PAC的MD5值</p>
 <p>之前提过PAC是在AS-REP阶段被放在TGT的，但ms14-068中PAC没有被放在TGT中，而是放在了TGS_REQ数据包的req-body中。KDC在实现上竟然允许这样的构造，也就是说，KDC能够正确解析出放在其它地方（不在TGT）的PAC信息。</p>
-<p><a class="lightgallery" href="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png" title="image-20240803171344721" data-thumbnail="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png">
-        <img
-            
-            loading="lazy"
-            src="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png"
-            srcset="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png, ../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png 1.5x, ../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png 2x"
-            sizes="auto"
-            alt="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png">
-    </a></p>
+<img src="../../../img/Kerberos%E5%88%86%E6%9E%90/image-20240803171344721.png" alt="image-20240803171344721" style="zoom:150%;" />
 <p>KDC会从<strong>authenticator</strong>中提取出<strong>subkey</strong>把PAC信息解密，然后对PAC数据进行MD5加密得到一个值，发现和TGS-REQ发送来的校验和一致，于是通过验证。并且用客户端指定的（MD5）算法重新使用Server_Key和KDC_Key在PAC尾部生成签名，把Session key用subkey加密，组合成一个新的TGT返回给客户端</p>
 <p>参考</p>
 <p><a href="https://y4er.com/posts/kerberos-pac/" target="_blank" rel="noopener noreferrer">https://y4er.com/posts/kerberos-pac/</a></p>
