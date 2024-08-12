@@ -12,12 +12,5 @@
         <name>J1oo</name>
     </author><guid>https://J1oo.github.io/2024/07/kerberos%E5%88%86%E6%9E%90/</guid>
     <description><![CDATA[kerberos 的主要步骤如下，重点分析前四步 AS-REQ AS-REP TGS-REQ TGS-REP AP-REQ AP-REP 1 AS-REQ在域控上抓包，查看机器登陆域用户时产生的流量 发现AS-REQ会进行两次，原因是开启]]></description>
-</item><item>
-    <title>test</title>
-    <link>https://J1oo.github.io/2024/07/test/</link>
-    <pubDate>Sun, 28 Jul 2024 04:54:51 &#43;0800</pubDate><author>
-        <name>J1oo</name>
-    </author><guid>https://J1oo.github.io/2024/07/test/</guid>
-    <description><![CDATA[ ]]></description>
 </item></channel>
 </rss>
